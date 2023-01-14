@@ -1,6 +1,6 @@
 import React from 'react';
-import './style.css'
+import './style.css';
 
-export const AboutRouterCpt1 = () => { 
-    return <h3 className='layout'>这是悟空页面</h3>
-}
+export const AboutRouterCpt1 = () => {
+    return <h3 className='layout'>这是悟空页面</h3>;
+};
