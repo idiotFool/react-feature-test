@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useHistory, useRouteMatch, useLocation } from 'react-router-dom';
 import './style.css';
 
@@ -10,23 +10,25 @@ const datas = [{
   id: '2',
   value: '八戒',
   path: 'bajie'
-}]
+}];
 
 export const TopCommonCpt = () => {
   const [count, setCount] = useState(0);
   const history = useHistory();
-  const { url } = useRouteMatch();
+  // const { url } = useRouteMatch();
   const location = useLocation();
   const [activeId, setActiveId] = useState(() => {
     const matchObj = datas.filter(data => location.pathname.includes(data.path))[0];
-    return matchObj?.id || '1'
+    return matchObj?.id || '1';
   });
 
   const clickHandler = (path, id) => {
+    console.log(path, 'dianjia');
     history.push(path);
-    setActiveId(id)
-  }
+    setActiveId(id);
+  };
 
+  const url = '/about';
   return (
     <>
       <div className='layout'>
@@ -38,13 +40,12 @@ export const TopCommonCpt = () => {
 
       <div className='layout'>
         {
-          datas.map(({ value, id, path }) =>
-          {
-            return <button key={id} className={activeId === id ? 'active' : ''} onClick={() => clickHandler(`${url}/${path}`, id)}>{value}</button>
+          datas.map(({ value, id, path }) => {
+            return <button key={id} className={activeId === id ? 'active' : ''} onClick={() => clickHandler(`${url}/${path}`, id)}>{value}</button>;
           })
         }
       </div>
     </>
-  )
-}
+  );
+};
 

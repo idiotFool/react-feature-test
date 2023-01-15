@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState } from 'react';
-import { HashRouter as Router } from 'react-router-dom'
+import { HashRouter as Router } from 'react-router-dom';
 import './App.css';
 
 /* hook  test */
@@ -15,43 +15,43 @@ import thunk from 'redux-thunk';
 
 import RefTest from './components/RefTest';
 import { FormControlByHook } from './components/FormControl';
-import { ContextByHook } from './components/Context'
+import { ContextByHook } from './components/Context';
 import IdiotFoolInfo from './components/IdiotFoolInfo';
 import { TopCommonCptWithLink, TopCommonCptHistoryFn, TopCommonCptNestedRouter } from './features/nestedRouter/Main';
+import { RequireContext } from './features/requireContext';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
 export const TreeContext = createContext();
 
-export const useTrees = () => useContext(TreeContext)
+export const useTrees = () => useContext(TreeContext);
 
 const trees = [{
-    id: 1,
-    type: 'oka'
+  id: 1,
+  type: 'oka'
 }, {
-    id: 2,
-    type: 'baihualin'
+  id: 2,
+  type: 'baihualin'
 }, {
-    id: 3,
-    type: 'song'
+  id: 3,
+  type: 'song'
 }, {
-    id: 4,
-    type: 'yang'
-}]
+  id: 4,
+  type: 'yang'
+}];
 
 
 function App() {
 
   return (
     <Provider store={store}>
-      <TreeContext.Provider value={{trees}}>
+      <TreeContext.Provider value={{ trees }}>
         <div className="App">
-            {/*<Example/>*/}
-            {console.log('app')}
-            <ReduxExample />
+          {/*<Example/>*/}
+          {console.log('app')}
+          <ReduxExample />
         </div>
         <RefTest />
-
         <FormControlByHook />
 
         <ContextByHook />
@@ -62,13 +62,25 @@ function App() {
   );
 }
 
-const RouterApp = () => { 
+// features/nestedRouter 功能测试测试代码
+export const RouterApp = () => {
   return (
     <Router>
       <TopCommonCptNestedRouter></TopCommonCptNestedRouter>
     </Router>
-  )
-}
+  );
+};
 
 
-export default RouterApp;
+// features/requireContext 功能测试测试代码
+export const RequireContextApp = () => {
+  return (
+    <Router>
+      <RequireContext />
+    </Router>
+  );
+};
+
+
+
+export default RequireContextApp;

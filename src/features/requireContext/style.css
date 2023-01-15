@@ -1,0 +1,30 @@
+.layout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.topCommon {
+  background-color: #ccc;
+  height: 200px;
+  text-align: center;
+}
+
+.content {
+  border: 1px solid red;
+  height: 600px;
+  margin-top: 20px;
+}
+
+.layout button {
+  outline: 0;
+  border: 1px solud #ccc;
+  padding: 8px 12px;
+  font-size: 18px;
+  border-radius: 4px;
+}
+
+.active {
+  background-color: seagreen;
+  color: white;
+}
