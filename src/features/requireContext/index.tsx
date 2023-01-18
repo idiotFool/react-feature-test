@@ -80,8 +80,6 @@ export const RequireContextBefore = () => {
   );
 };
 
-const Test = () => <h1>这是测试</h1>;
-
 export const RequireContext = () => {
   const keys = routeContext.keys();
   return (
@@ -91,7 +89,7 @@ export const RequireContext = () => {
           routeContext(key).default;
         const Component = lazy(component);
         const ChildComponent = lazy(childComponent);
-        console.log(path, !!exact);
+
         return (
           <Route key={path} path={path}>
             <Suspense key={path} fallback={<div>Loading.....</div>}>
@@ -103,9 +101,7 @@ export const RequireContext = () => {
                       <Redirect to={defaultChildPath}></Redirect>
                     </Route>
                     <Route path={`${path}/:childRouteDiffParam`}>
-                      <Suspense key={path} fallback={<div>Loading.....</div>}>
-                        <ChildComponent></ChildComponent>
-                      </Suspense>
+                      <ChildComponent></ChildComponent>
                     </Route>
                   </Switch>
                 </div>

@@ -15,7 +15,7 @@ const datas = [{
 export const TopCommonCpt = () => {
   const [count, setCount] = useState(0);
   const history = useHistory();
-  // const { url } = useRouteMatch();
+  const { url } = useRouteMatch();
   const location = useLocation();
   const [activeId, setActiveId] = useState(() => {
     const matchObj = datas.filter(data => location.pathname.includes(data.path))[0];
@@ -28,7 +28,6 @@ export const TopCommonCpt = () => {
     setActiveId(id);
   };
 
-  const url = '/about';
   return (
     <>
       <div className='layout'>

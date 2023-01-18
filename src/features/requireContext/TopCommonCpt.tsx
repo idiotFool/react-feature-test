@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory, useRouteMatch, useLocation } from "react-router-dom";
+import { Carousel } from "antd";
 import "./style.css";
 
 const datas = [
@@ -14,6 +15,31 @@ const datas = [
     path: "bajie"
   }
 ];
+
+const contentStyle: React.CSSProperties = {
+  height: "160px",
+  color: "#fff",
+  lineHeight: "160px",
+  textAlign: "center",
+  background: "#364d79"
+};
+
+export const TopCarousel: React.FC = () => (
+  <Carousel autoplay>
+    <div>
+      <h3 style={contentStyle}>1</h3>
+    </div>
+    <div>
+      <h3 style={contentStyle}>2</h3>
+    </div>
+    <div>
+      <h3 style={contentStyle}>3</h3>
+    </div>
+    <div>
+      <h3 style={contentStyle}>4</h3>
+    </div>
+  </Carousel>
+);
 
 export const TopCommonCpt = () => {
   const [count, setCount] = useState(0);
@@ -32,6 +58,13 @@ export const TopCommonCpt = () => {
     setActiveId(id);
   };
 
+  useEffect(() => {
+    console.log("top common");
+    return () => {
+      console.log("top common unmounted");
+    };
+  }, []);
+
   return (
     <>
       <div className="layout">
@@ -39,6 +72,8 @@ export const TopCommonCpt = () => {
           <h2>当前的计数是： {count}</h2>
           <button onClick={() => setCount(count + 1)}>更新计数</button>
         </div>
+
+        <TopCarousel />
       </div>
 
       <div className="layout">
