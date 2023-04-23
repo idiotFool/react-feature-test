@@ -5,6 +5,7 @@ import './App.css';
 /* hook  test */
 import Example from './hooks/Example';
 import './hooks/index.css';
+import "antd/dist/antd.css";
 
 /* redux test */
 import ReduxExample from './redux';
@@ -19,6 +20,7 @@ import { ContextByHook } from './components/Context';
 import IdiotFoolInfo from './components/IdiotFoolInfo';
 import { TopCommonCptWithLink, TopCommonCptHistoryFn, TopCommonCptNestedRouter } from './features/nestedRouter/Main';
 import { RequireContext } from './features/requireContext';
+import { MultiTableDrag } from './features/antdAndreactBeautifulDnD';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -83,4 +85,4 @@ export const RequireContextApp = () => {
 
 
 
-export default RequireContextApp;
+export default MultiTableDrag;
