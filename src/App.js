@@ -21,6 +21,7 @@ import IdiotFoolInfo from './components/IdiotFoolInfo';
 import { TopCommonCptWithLink, TopCommonCptHistoryFn, TopCommonCptNestedRouter } from './features/nestedRouter/Main';
 import { RequireContext } from './features/requireContext';
 import { ReactDOMServer } from './features/reactDOMServer/ReactDOMServer';
+import { VerticalSlide } from './features/swiperSlide/Slide';
 
 // 拖拽
 import { MultiTableDrag } from './features/antdAndreactBeautifulDnD';
@@ -94,3 +95,5 @@ export const RequireContextApp = () => {
 // export default AnchorJump;
 
 export default ReactDOMServer;
+
+// export default VerticalSlide;
