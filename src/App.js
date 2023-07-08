@@ -20,7 +20,13 @@ import { ContextByHook } from './components/Context';
 import IdiotFoolInfo from './components/IdiotFoolInfo';
 import { TopCommonCptWithLink, TopCommonCptHistoryFn, TopCommonCptNestedRouter } from './features/nestedRouter/Main';
 import { RequireContext } from './features/requireContext';
+import { ReactDOMServer } from './features/reactDOMServer/ReactDOMServer';
+
+// 拖拽
 import { MultiTableDrag } from './features/antdAndreactBeautifulDnD';
+
+// 锚点跳转
+import { AnchorJump } from './features/anchorJump/AnchorJump';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -83,6 +89,8 @@ export const RequireContextApp = () => {
   );
 };
 
+// export default MultiTableDrag;
 
+// export default AnchorJump;
 
-export default MultiTableDrag;
+export default ReactDOMServer;
