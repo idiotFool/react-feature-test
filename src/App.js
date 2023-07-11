@@ -29,6 +29,9 @@ import { MultiTableDrag } from './features/antdAndreactBeautifulDnD';
 // 锚点跳转
 import { AnchorJump } from './features/anchorJump/AnchorJump';
 
+// 滑动日历
+import SlideContainer from './features/slideCalendar';
+
 const store = createStore(reducers, applyMiddleware(thunk));
 
 export const TreeContext = createContext();
@@ -94,6 +97,8 @@ export const RequireContextApp = () => {
 
 // export default AnchorJump;
 
-export default ReactDOMServer;
+// export default ReactDOMServer;
 
 // export default VerticalSlide;
+
+export default SlideContainer;
