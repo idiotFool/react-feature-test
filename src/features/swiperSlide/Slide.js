@@ -20,7 +20,11 @@ export const VerticalSlide = () => {
   };
 
   const cellRender = (current) => {
-    return <div style={{ textAlign: 'center' }}>{current.format('MMDD')}</div>;
+    return <div style={{ textAlign: 'center' }} className={current.format('YYYYMMDD') === date.format('YYYYMMDD') ? 'active' : ''}>{current.format('MMDD')}</div>;
+  };
+
+  const handleSelect = (current) => {
+    setDate(current);
   };
 
   return (
@@ -35,6 +39,7 @@ export const VerticalSlide = () => {
           <Calendar
             dateFullCellRender={cellRender}
             value={date.startOf("month")}
+            onSelect={handleSelect}
             headerRender={() => null}
           />
         </SwiperSlide>

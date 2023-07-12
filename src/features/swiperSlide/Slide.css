@@ -24,3 +24,7 @@
 .mySwiper {
   height: 250px;
 }
+
+.active {
+  background-color: blueviolet;
+}
