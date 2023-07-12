@@ -99,6 +99,6 @@ export const RequireContextApp = () => {
 
 // export default ReactDOMServer;
 
-// export default VerticalSlide;
+export default VerticalSlide;
 
-export default SlideContainer;
+// export default SlideContainer;

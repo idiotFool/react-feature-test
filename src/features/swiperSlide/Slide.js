@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Calendar } from "antd";
+import dayjs from "dayjs";
 
 // Import Swiper styles
 import "swiper/swiper-bundle.css";
@@ -8,19 +10,34 @@ import "swiper/swiper.min.css";
 import "./Slide.css";
 
 export const VerticalSlide = () => {
+  const [date, setDate] = useState(dayjs());
+
+  const handleMove = (swiper) => {
+    const { startY, currentY } = swiper.touches;
+
+    // 无法通过swipeDirection来判断滑动的方向， 只能通过滑动的点的坐标；当currentY大于startY时，向下滑动；反之向上滑动;
+    setDate(date.add(currentY > startY ? -1 : 1, 'month'));
+  };
+
+  const cellRender = (current) => {
+    return <div style={{ textAlign: 'center' }}>{current.format('MMDD')}</div>;
+  };
+
   return (
-    <div>
+    <div style={{ textAlign: 'center' }}>
       <p>这是一个段落</p>
-      <Swiper direction={"vertical"} className="mySwiper">
-        <SwiperSlide>Slide 1</SwiperSlide>
-        <SwiperSlide>Slide 2</SwiperSlide>
-        <SwiperSlide>Slide 3</SwiperSlide>
-        <SwiperSlide>Slide 4</SwiperSlide>
-        <SwiperSlide>Slide 5</SwiperSlide>
-        <SwiperSlide>Slide 6</SwiperSlide>
-        <SwiperSlide>Slide 7</SwiperSlide>
-        <SwiperSlide>Slide 8</SwiperSlide>
-        <SwiperSlide>Slide 9</SwiperSlide>
+      <Swiper
+        direction={"vertical"}
+        onSliderFirstMove={(swiper) => handleMove(swiper)}
+        className="mySwiper"
+      >
+        <SwiperSlide>
+          <Calendar
+            dateFullCellRender={cellRender}
+            value={date.startOf("month")}
+            headerRender={() => null}
+          />
+        </SwiperSlide>
       </Swiper>
 
       <p>这是一个段落</p>
