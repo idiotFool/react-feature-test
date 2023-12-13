@@ -20,8 +20,8 @@ import { ContextByHook } from './components/Context';
 import IdiotFoolInfo from './components/IdiotFoolInfo';
 import { TopCommonCptWithLink, TopCommonCptHistoryFn, TopCommonCptNestedRouter } from './features/nestedRouter/Main';
 import { RequireContext } from './features/requireContext';
-import { ReactDOMServer } from './features/reactDOMServer/ReactDOMServer';
-import { VerticalSlide } from './features/swiperSlide/Slide';
+// import { ReactDOMServer } from './features/reactDOMServer/ReactDOMServer';
+// import { VerticalSlide } from './features/swiperSlide/Slide';
 
 // 拖拽
 import { MultiTableDrag } from './features/antdAndreactBeautifulDnD';
@@ -30,7 +30,13 @@ import { MultiTableDrag } from './features/antdAndreactBeautifulDnD';
 import { AnchorJump } from './features/anchorJump/AnchorJump';
 
 // 滑动日历
-import SlideContainer from './features/slideCalendar';
+// import SlideContainer from './features/slideCalendar';
+
+// 3D滑动
+import Slide3D from './features/cardSlide3D/Slide3D';
+
+// Swiper 3D滑动
+import Swiper3D from './features/swiper3D/Slider3D';
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -99,6 +105,10 @@ export const RequireContextApp = () => {
 
 // export default ReactDOMServer;
 
-export default VerticalSlide;
+// export default VerticalSlide;
 
 // export default SlideContainer;
+
+// export default Slide3D;
+
+export default Swiper3D;
