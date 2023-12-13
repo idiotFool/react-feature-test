@@ -36,7 +36,13 @@ import { AnchorJump } from './features/anchorJump/AnchorJump';
 import Slide3D from './features/cardSlide3D/Slide3D';
 
 // Swiper 3D滑动
-import Swiper3D from './features/swiper3D/Slider3D';
+// import Swiper3D from './features/swiper3D/Slider3D';
+
+// 滚动加载
+import ScrollLoading from './features/scrollLoading';
+
+
+
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
@@ -111,4 +117,6 @@ export const RequireContextApp = () => {
 
 // export default Slide3D;
 
-export default Swiper3D;
+// export default Swiper3D;
+
+export default ScrollLoading;
