@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import type { MenuItem } from "./types";
+
+import { useScroll } from "./useScroll";
+import "./index.css";
 
 const Menu = ({
   menus,
@@ -10,8 +13,9 @@ const Menu = ({
   selectedMenu: string;
   handleClick: (id: string) => void;
 }) => {
+  const [isFixed] = useScroll();
   return (
-    <ul>
+    <ul id="menuContainer" className={`menuBox ${isFixed ? "fixed" : ""}`}>
       {menus.map((item) => (
         <li
           key={item.id}

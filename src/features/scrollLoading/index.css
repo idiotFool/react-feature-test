@@ -22,11 +22,14 @@
   grid-column-gap: 20px;
   height: calc(100% - 60px);
   overflow-y: auto;
+  position: relative;
 }
 
 .menu_container {
-  background-color: #efefef;
+  background-color: #fff;
   padding: 20px 0;
+  display: flex;
+  justify-content: center;
 }
 
 .menu_container li {
@@ -48,7 +51,15 @@
 
 .wrapper {
   width: 100%;
-  height: 600px;
+  height: 800px;
   background: #eee;
-  margin: 20px 0;
+}
+
+.menuBox {
+  width: 200px;
+}
+
+.fixed {
+  position: fixed;
+  top: 80px;
 }
