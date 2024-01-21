@@ -41,6 +41,8 @@ import Slide3D from './features/cardSlide3D/Slide3D';
 // 滚动加载
 import ScrollLoading from './features/scrollLoading';
 
+import PromptWhenChange from './features/PropmtWhenRouterChange/PromptWhenChange';
+
 
 
 
@@ -119,4 +121,6 @@ export const RequireContextApp = () => {
 
 // export default Swiper3D;
 
-export default ScrollLoading;
+// export default ScrollLoading;
+
+export default PromptWhenChange;
