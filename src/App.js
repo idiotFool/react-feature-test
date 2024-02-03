@@ -41,9 +41,14 @@ import Slide3D from './features/cardSlide3D/Slide3D';
 // 滚动加载
 import ScrollLoading from './features/scrollLoading';
 
+// 通过react-router-dom的Promt组件实现路由切换时页面更新数据是否需要保存的功能
 import PromptWhenChange from './features/PropmtWhenRouterChange/PromptWhenChange';
 
+// antd 的datepicker组件，定位到某个月份，但是又不显示对应的值的探索
+import AntdDatePickerWithDefaultValue from './features/antdDatePickerWithDefaultValue/AntdDatePickerWithDefaultValue';
 
+// 使用useImperativeHandle hook实现父组件调用子组件的方法
+import HooksUseImperativeHandle from './features/HooksUseImperativeHandle/HooksUseImperativeHandle';
 
 
 const store = createStore(reducers, applyMiddleware(thunk));
@@ -123,4 +128,8 @@ export const RequireContextApp = () => {
 
 // export default ScrollLoading;
 
-export default PromptWhenChange;
+// export default PromptWhenChange;
+
+// export default AntdDatePickerWithDefaultValue;
+
+export default HooksUseImperativeHandle;
