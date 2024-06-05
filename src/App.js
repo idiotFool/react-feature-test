@@ -50,12 +50,15 @@ import AntdDatePickerWithDefaultValue from './features/antdDatePickerWithDefault
 // 使用useImperativeHandle hook实现父组件调用子组件的方法
 import HooksUseImperativeHandle from './features/HooksUseImperativeHandle/HooksUseImperativeHandle';
 
+import WebpackRequireContext from './features/webpackRequireContext';
+
+
 
 const store = createStore(reducers, applyMiddleware(thunk));
 
-export const TreeContext = createContext();
+// export const TreeContext = createContext();
 
-export const useTrees = () => useContext(TreeContext);
+// export const useTrees = () => useContext(TreeContext);
 
 const trees = [{
   id: 1,
@@ -72,64 +75,46 @@ const trees = [{
 }];
 
 
-function App() {
+// function App() {
 
-  return (
-    <Provider store={store}>
-      <TreeContext.Provider value={{ trees }}>
-        <div className="App">
-          {/*<Example/>*/}
-          {console.log('app')}
-          <ReduxExample />
-        </div>
-        <RefTest />
-        <FormControlByHook />
+//   return (
+//     <Provider store={store}>
+//       <TreeContext.Provider value={{ trees }}>
+//         <div className="App">
+//           {/*<Example/>*/}
+//           {console.log('app')}
+//           <ReduxExample />
+//         </div>
+//         <RefTest />
+//         <FormControlByHook />
 
-        <ContextByHook />
+//         <ContextByHook />
 
-        <IdiotFoolInfo />
-      </TreeContext.Provider >
-    </Provider>
-  );
-}
+//         <IdiotFoolInfo />
+//       </TreeContext.Provider >
+//     </Provider>
+//   );
+// }
 
 // features/nestedRouter 功能测试测试代码
-export const RouterApp = () => {
-  return (
-    <Router>
-      <TopCommonCptNestedRouter></TopCommonCptNestedRouter>
-    </Router>
-  );
-};
+// export const RouterApp = () => {
+//   return (
+//     <Router>
+//       <TopCommonCptNestedRouter></TopCommonCptNestedRouter>
+//     </Router>
+//   );
+// };
 
 
 // features/requireContext 功能测试测试代码
-export const RequireContextApp = () => {
-  return (
-    <Router>
-      <RequireContext />
-    </Router>
-  );
-};
+// export const RequireContextApp = () => {
+//   return (
+//     <Router>
+//       <RequireContext />
+//     </Router>
+//   );
+// };
 
-// export default MultiTableDrag;
 
-// export default AnchorJump;
+export default WebpackRequireContext;
 
-// export default ReactDOMServer;
-
-// export default VerticalSlide;
-
-// export default SlideContainer;
-
-// export default Slide3D;
-
-// export default Swiper3D;
-
-// export default ScrollLoading;
-
-// export default PromptWhenChange;
-
-// export default AntdDatePickerWithDefaultValue;
-
-export default HooksUseImperativeHandle;
