@@ -54,7 +54,9 @@ try {
           } else if (error.message.includes('conflict')) {
             console.log(`Conflict encountered during cherry-pick of commit ${hash}. Resolving conflicts...`);
             // 解决冲突后继续 cherry-pick
-            execSync('git add . && git cherry-pick --continue');
+            execSync('git status --porcelain');
+            execSync('git add .');
+            execSync('git cherry-pick --continue');
           } else {
             throw error;
           }
