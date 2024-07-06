@@ -19,9 +19,9 @@ try {
   if (status !== '') {
     console.log("Uncommitted changes found in the working directory. Committing or stashing changes...");
     // 提交或者暂存当前修改
-    // execSync(`git add . && git commit -m "Committing current changes"`);
+    execSync(`git add . && git commit -m "Committing current changes"`);
     // 或者使用 git stash
-    execSync(`git stash`);
+    // execSync(`git stash`);
   }
 
   // 构建 git log 命令，获取相关的提交哈希
@@ -55,9 +55,9 @@ try {
           console.log(`Skipping empty cherry-pick for commit ${hash}`);
           execSync('git cherry-pick --skip');
         } else if (error.message.includes('conflict')) {
-          console.log(`Conflict encountered during cherry-pick of commit ${hash}. Aborting cherry-pick.`);
-          execSync('git cherry-pick --abort');
-          throw new Error(`Cherry-pick failed for commit ${hash}.`);
+          console.log(`Conflict encountered during cherry-pick of commit ${hash}. Resolving conflicts...`);
+          // 解决冲突后继续 cherry-pick
+          execSync('git add . && git cherry-pick --continue');
         } else {
           throw error;
         }
