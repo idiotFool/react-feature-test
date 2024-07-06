@@ -41,6 +41,14 @@ try {
     // 应用每个提交到临时分支上
     commitHashes.forEach(hash => {
       try {
+        // 每次 cherry-pick 前检查是否有未提交的修改
+        const statusCheck = execSync('git status --porcelain', { encoding: 'utf8' }).trim();
+        if (statusCheck !== '') {
+          console.log("Uncommitted changes found. Stashing changes before cherry-pick...");
+          execSync(`git stash push -m "Stash before cherry-pick"`);
+        }
+
+        // 执行 cherry-pick 操作
         execSync(`git cherry-pick ${hash}`);
       } catch (error) {
         if (error.message.includes('The previous cherry-pick is now empty')) {
