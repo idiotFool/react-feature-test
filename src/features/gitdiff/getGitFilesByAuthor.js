@@ -39,7 +39,7 @@ try {
 
   try {
     // 应用每个提交到临时分支上
-    commitHashes.forEach(hash => {
+    for (const hash of commitHashes) {
       try {
         // 每次 cherry-pick 前检查是否有未提交的修改
         const statusCheck = execSync('git status --porcelain', { encoding: 'utf8' }).trim();
@@ -62,7 +62,7 @@ try {
           throw error;
         }
       }
-    });
+    }
 
     // 获取所有文件的最终变动
     const diffCommand = `git diff HEAD^ HEAD`;
