@@ -12,6 +12,18 @@ if (!author || !since || !until) {
 }
 
 try {
+  // 检查当前工作目录是否干净
+  const statusCommand = `git status --porcelain`;
+  const status = execSync(statusCommand, { encoding: 'utf8' }).trim();
+
+  if (status !== '') {
+    console.log("Uncommitted changes found in the working directory. Committing or stashing changes...");
+    // 提交或者暂存当前修改
+    // execSync(`git add . && git commit -m "Committing current changes"`);
+    // 或者使用 git stash
+    execSync(`git stash`);
+  }
+
   // 构建 git log 命令，获取相关的提交哈希
   const logCommand = `git log --author="${author}" --since="${since}" --until="${until}" --pretty=format:%H`;
   const commitHashes = execSync(logCommand, { encoding: 'utf8' }).trim().split('\n').filter(hash => hash !== '');
