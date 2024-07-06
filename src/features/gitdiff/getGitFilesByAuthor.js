@@ -1,76 +1,51 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 
-// 获取命令行参数
+// Command line arguments
 const author = process.argv[2];
 const since = process.argv[3];
 const until = process.argv[4];
 
 if (!author || !since || !until) {
-  console.error("Usage: node getFinalChanges.js <author> <since> <until>");
+  console.error("Usage: node collectUserChanges.js <author> <since> <until>");
   process.exit(1);
 }
 
 try {
-  // 检查当前工作目录是否干净
-  const statusCommand = `git status --porcelain`;
-  const status = execSync(statusCommand, { encoding: 'utf8' }).trim();
-
-  if (status !== '') {
-    console.log("Uncommitted changes found in the working directory. Committing or stashing changes...");
-    // 提交或者暂存当前修改
-    execSync(`git add . && git commit -m "Committing current changes"`);
-    // 或者使用 git stash
-    // execSync(`git stash`);
-  }
-
-  // 构建 git log 命令，获取相关的提交哈希
+  // Step 1: Get commit hashes by the author within the time range
   const logCommand = `git log --author="${author}" --since="${since}" --until="${until}" --pretty=format:%H`;
   const commitHashes = execSync(logCommand, { encoding: 'utf8' }).trim().split('\n').filter(hash => hash !== '');
 
   if (commitHashes.length === 0) {
-    console.log("No commits found for the specified author and date range.");
+    console.log(`No commits found for ${author} between ${since} and ${until}.`);
     process.exit(0);
   }
 
-  // 创建一个临时分支
-  const tempBranchName = `temp-branch-${Date.now()}`;
-  execSync(`git checkout -b ${tempBranchName}`);
+  // Step 2: Get list of files changed by the author across all commits
+  const changedFiles = new Set();
 
-  try {
-    // 应用每个提交到临时分支上
-    for (const hash of commitHashes) {
-      try {
-        execSync(`git cherry-pick ${hash}`, { stdio: 'inherit' });
-      } catch (error) {
-        if (error.message.includes('The previous cherry-pick is now empty')) {
-          console.log(`Skipping empty cherry-pick for commit ${hash}`);
-          execSync('git cherry-pick --skip');
-        } else if (error.message.includes('conflict')) {
-          console.log(`Conflict encountered during cherry-pick of commit ${hash}. Resolving conflicts...`);
-          // 解决冲突
-          execSync('git status --porcelain');
-          execSync('git add .');
-          execSync('git cherry-pick --continue');
-        } else {
-          throw error;
-        }
-      }
-    }
+  commitHashes.forEach(hash => {
+    const diffCommand = `git diff --name-only ${hash}^ ${hash}`;
+    const files = execSync(diffCommand, { encoding: 'utf8' }).trim().split('\n');
+    files.forEach(file => changedFiles.add(file));
+  });
 
-    // 获取所有文件的最终变动
-    const diffCommand = `git diff HEAD^ HEAD`;
+  // Step 3: Write changes to a text file
+  const outputFilename = `userChanges_${author}_${since}_${until}.txt`;
+  const outputStream = fs.createWriteStream(outputFilename, { flags: 'a' });
+
+  changedFiles.forEach(file => {
+    const logCommand = `git log --author="${author}" --since="${since}" --until="${until}" --follow -- "${file}" --pretty=format:%H`;
+    const commitsForFile = execSync(logCommand, { encoding: 'utf8' }).trim().split('\n').filter(hash => hash !== '');
+    const diffCommand = `git diff ${commitsForFile[0]} ${commitsForFile[commitsForFile.length - 1]} -- "${file}"`;
     const finalDiff = execSync(diffCommand, { encoding: 'utf8' });
+    outputStream.write(`\nChanges for file: ${file}\n\n${finalDiff}\n\n`);
+  });
 
-    // 输出最终变动到文件
-    const outputFile = `finalChanges_${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
-    fs.writeFileSync(outputFile, finalDiff, 'utf8');
-    console.log(`Final changes written to ${outputFile}`);
-  } finally {
-    // 切回主分支并删除临时分支
-    execSync(`git checkout -`);
-    execSync(`git branch -D ${tempBranchName}`);
-  }
+  console.log(`Changes made by ${author} between ${since} and ${until} saved to ${outputFilename}.`);
+
+  outputStream.end();
 } catch (error) {
   console.error(`Error: ${error.message}`);
+  process.exit(1);
 }
