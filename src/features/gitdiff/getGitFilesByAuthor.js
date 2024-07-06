@@ -40,26 +40,24 @@ try {
   try {
     // 应用每个提交到临时分支上
     for (const hash of commitHashes) {
-      try {
-        // 每次 cherry-pick 前检查是否有未提交的修改
-        const statusCheck = execSync('git status --porcelain', { encoding: 'utf8' }).trim();
-        if (statusCheck !== '') {
-          console.log("Uncommitted changes found. Stashing changes before cherry-pick...");
-          execSync(`git stash push -m "Stash before cherry-pick"`);
-        }
-
-        // 执行 cherry-pick 操作
-        execSync(`git cherry-pick ${hash}`, { stdio: 'inherit' });
-      } catch (error) {
-        if (error.message.includes('The previous cherry-pick is now empty')) {
-          console.log(`Skipping empty cherry-pick for commit ${hash}`);
-          execSync('git cherry-pick --skip');
-        } else if (error.message.includes('conflict')) {
-          console.log(`Conflict encountered during cherry-pick of commit ${hash}. Resolving conflicts...`);
-          // 解决冲突后继续 cherry-pick
-          execSync('git add . && git cherry-pick --continue');
-        } else {
-          throw error;
+      let cherryPickSuccess = false;
+      while (!cherryPickSuccess) {
+        try {
+          // 执行 cherry-pick 操作
+          execSync(`git cherry-pick ${hash}`, { stdio: 'inherit' });
+          cherryPickSuccess = true;
+        } catch (error) {
+          if (error.message.includes('The previous cherry-pick is now empty')) {
+            console.log(`Skipping empty cherry-pick for commit ${hash}`);
+            execSync('git cherry-pick --skip');
+            cherryPickSuccess = true;
+          } else if (error.message.includes('conflict')) {
+            console.log(`Conflict encountered during cherry-pick of commit ${hash}. Resolving conflicts...`);
+            // 解决冲突后继续 cherry-pick
+            execSync('git add . && git cherry-pick --continue');
+          } else {
+            throw error;
+          }
         }
       }
     }
