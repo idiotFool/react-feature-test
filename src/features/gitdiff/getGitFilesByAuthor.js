@@ -49,7 +49,7 @@ try {
         }
 
         // 执行 cherry-pick 操作
-        execSync(`git cherry-pick ${hash}`);
+        execSync(`git cherry-pick ${hash}`, { stdio: 'inherit' });
       } catch (error) {
         if (error.message.includes('The previous cherry-pick is now empty')) {
           console.log(`Skipping empty cherry-pick for commit ${hash}`);
