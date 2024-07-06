@@ -40,26 +40,20 @@ try {
   try {
     // 应用每个提交到临时分支上
     for (const hash of commitHashes) {
-      let cherryPickSuccess = false;
-      while (!cherryPickSuccess) {
-        try {
-          // 执行 cherry-pick 操作
-          execSync(`git cherry-pick ${hash}`, { stdio: 'inherit' });
-          cherryPickSuccess = true;
-        } catch (error) {
-          if (error.message.includes('The previous cherry-pick is now empty')) {
-            console.log(`Skipping empty cherry-pick for commit ${hash}`);
-            execSync('git cherry-pick --skip');
-            cherryPickSuccess = true;
-          } else if (error.message.includes('conflict')) {
-            console.log(`Conflict encountered during cherry-pick of commit ${hash}. Resolving conflicts...`);
-            // 解决冲突后继续 cherry-pick
-            execSync('git status --porcelain');
-            execSync('git add .');
-            execSync('git cherry-pick --continue');
-          } else {
-            throw error;
-          }
+      try {
+        execSync(`git cherry-pick ${hash}`, { stdio: 'inherit' });
+      } catch (error) {
+        if (error.message.includes('The previous cherry-pick is now empty')) {
+          console.log(`Skipping empty cherry-pick for commit ${hash}`);
+          execSync('git cherry-pick --skip');
+        } else if (error.message.includes('conflict')) {
+          console.log(`Conflict encountered during cherry-pick of commit ${hash}. Resolving conflicts...`);
+          // 解决冲突
+          execSync('git status --porcelain');
+          execSync('git add .');
+          execSync('git cherry-pick --continue');
+        } else {
+          throw error;
         }
       }
     }
