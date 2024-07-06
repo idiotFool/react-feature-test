@@ -19,7 +19,7 @@ const users = {
 const userKey = process.argv[2];
 
 if (!userKey || !users[userKey]) {
-  console.error("Usage: node switchGitUser.js {user1|user2}");
+  console.error("Usage: node switchGitUser.js {user1|user2|local}");
   process.exit(1);
 }
 
