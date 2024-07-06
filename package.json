@@ -73,8 +73,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "diff": "node ./src/features/gitdiff/getGitFilesByAuthor.js",
-    "switch": "node ./src/features/gitdiff/switchGitUser.js"
+    "diff": "node ./src/features/gitdiff/getGitFilesByAuthor.js"
   },
   "eslintConfig": {
     "extends": "react-app"

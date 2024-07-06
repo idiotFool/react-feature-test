@@ -1,6 +1,5 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
-const path = require('path');
 
 // 获取命令行参数
 const author = process.argv[2];
@@ -22,11 +21,6 @@ try {
     process.exit(0);
   }
 
-  // 获取当前时间并格式化为字符串
-  const currentDateTime = new Date();
-  const formattedDateTime = currentDateTime.toISOString().replace(/[:.]/g, '-'); // 替换冒号和点
-  const outputFile = `finalChanges_${formattedDateTime}.txt`;
-
   // 创建一个临时分支
   const tempBranchName = `temp-branch-${Date.now()}`;
   execSync(`git checkout -b ${tempBranchName}`);
@@ -43,6 +37,7 @@ try {
         } else if (error.message.includes('conflict')) {
           console.log(`Conflict encountered during cherry-pick of commit ${hash}. Aborting cherry-pick.`);
           execSync('git cherry-pick --abort');
+          throw new Error(`Cherry-pick failed for commit ${hash}.`);
         } else {
           throw error;
         }
@@ -54,6 +49,7 @@ try {
     const finalDiff = execSync(diffCommand, { encoding: 'utf8' });
 
     // 输出最终变动到文件
+    const outputFile = `finalChanges_${new Date().toISOString().replace(/[:.]/g, '-')}.txt`;
     fs.writeFileSync(outputFile, finalDiff, 'utf8');
     console.log(`Final changes written to ${outputFile}`);
   } finally {
