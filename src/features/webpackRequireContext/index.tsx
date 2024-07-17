@@ -10,7 +10,7 @@
  *       react-jsx --- 在react17以及更高版本引入，使用新的jsx转换器进行转换
  */
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import RoutesConfig from "./routes";
 import Home from "./components/Home";
@@ -25,11 +25,13 @@ export default function WebpackRequireContext() {
 
   return (
     <Router>
-      <Route path="/">
-        <Home />
-        <Redirect to={animals} />
-      </Route>
-      <RoutesConfig />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Route path="/">
+          <Home />
+          <Redirect to={animals} />
+        </Route>
+        <RoutesConfig />
+      </Suspense>
     </Router>
   );
 }

@@ -31,6 +31,6 @@
 }
 
 .route_wrapper > div:hover {
-  color: #fff;
+  color: blueviolet;
   text-decoration: underline;
 }

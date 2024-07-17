@@ -1,7 +1,7 @@
 import { Switch, Route } from "react-router-dom";
 
 export default function RoutesConfig() {
-  const routeContexts = require.context("../animals", true, /.*route\.ts$/);
+  const routeContexts = require.context("../", true, /.*route\.ts$/);
   const routeKeys = routeContexts.keys();
 
   return (
@@ -11,7 +11,7 @@ export default function RoutesConfig() {
         console.log("key: ", key, "route: ", route.default());
 
         const { path, cpt: Cpt, ...rest } = route.default();
-        return <Route key={path} path={path} component={Cpt}></Route>;
+        return <Route key={path} exact path={path} component={Cpt}></Route>;
       })}
     </Switch>
   );
