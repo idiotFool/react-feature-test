@@ -747,6 +747,10 @@ module.exports = function (webpackEnv) {
           },
         },
       }),
+      new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest: require('./vendor-manifest.json')
+      })
     ].filter(Boolean),
     // Turn off performance processing because we utilize
     // our own hints via the FileSizeReporter

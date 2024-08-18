@@ -1,8 +1,6 @@
 import { lazy } from "react";
 import { animals } from "../routeContants";
-// import Animals from "./index";
-
-const Animals = lazy(() => import("./index"));
+import Animals from "./index";
 
 export default () => ({
   path: animals,
